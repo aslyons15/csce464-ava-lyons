@@ -1,0 +1,229 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  color: green;
+  margin: 5px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.subheader {
+  flex-direction: column;
+  color: darkgreen;
+}
+
+.subcontainer1 {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.subcontainer2 {
+  display: flex;
+  margin-right: 10%;
+}
+
+.title {
+  font-weight: bold;
+}
+
+#title {
+  font-weight: lighter
+}
+
+.location {
+  font-style: italic;
+}
+
+#linkedIn {
+  color: blue;
+}
+
+.nav_item {
+  background-color: grey;
+  border: 1px solid white;
+  text-align: center;
+  padding: 5px;
+}
+
+@media screen and (max-width:600px) {
+  nav {
+    flex-direction: column;
+  }
+}
+
+.nav_container {
+  display: flex;
+  align-items: center;
+
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+.image_item {
+  height: 500px;
+  width: 400px;
+}
+
+@media screen and (max-width:900px) {
+  .image_item {
+    height: 300px;
+    width: 200px;
+  }
+}
+
+.stars {
+  display: inline-block;
+  font-size: 30px;
+  padding: 5px;
+}
+
+.stars span {
+  cursor: pointer;
+}
+
+.stars span:hover,
+.stars span.active {
+  color: gold;
+}
+
+#feedbackForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#emailForm {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+#rating {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+#email {
+  margin-left: 10px;
+}
+
+.vertical-line {
+  width: 2px;
+  background-color: green;
+}
+
+.grid {
+	width: 606px;
+	height: 606px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.square {
+	height: 200px;
+	width: 200px;
+	border: solid black 1px;
+}
+
+.mole {
+	background-image: url("mole.jpg");
+	background-size: cover;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; 
+}
+
+.card-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.game-item {
+  padding: 5px;
+}
+
+#game-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+}
+
+.game-choice {
+  flex-direction: row;
+  margin-bottom: 5%;
+}
+
+#restart-mole {
+  margin-top: 10px;
+}
+
+.hangman-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.head {
+  width: 50px;
+  height: 50px;
+  background-color: #000;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.body {
+  width: 10px;
+  height: 100px;
+  background-color: #000;
+  margin-bottom: 10px;
+}
+
+.left-arm,
+.right-arm,
+.left-leg,
+.right-leg {
+  width: 10px;
+  height: 50px;
+  background-color: #000;
+  margin-bottom: 10px;
+}
+
+.left-arm,
+.right-arm {
+  margin-right: 20px;
+}
+
+.left-leg,
+.right-leg {
+  margin-left: 20px;
+}
+
