@@ -5,7 +5,7 @@ export default function Photos() {
 
   return (
     <div>
-      <img className="image_item" src="images/Ava photo.jpeg" alt='Profile'/>
+      <img className="image_item" src="Ava-photo.jpeg" alt='Profile'/>
     </div>
   );
 };
