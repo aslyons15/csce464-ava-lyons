@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './CSCE464Final.css';
 
 export default function Games() {
@@ -16,14 +16,16 @@ export default function Games() {
         <button onClick={() => toggleGame('WhacAMole')}>Whac-a-Mole Game</button>
         <button onClick={() => toggleGame('ClickingGame')}>Clicking Game</button>
         <button onClick={() => toggleGame('MemoryGame')}>Memory Game</button>
-        <button onClick={() => toggleGame('Hangman')}>Hangman Game</button>
+        <button onClick={() => toggleGame('SnakeGame')}>Snake Game</button>
+        {/* <button onClick={() => toggleGame('Hangman')}>Hangman Game</button> */}
       </div>
       <div>
         {currentGame === 'NumberGuessing' && <NumberGuessingGame />}
         {currentGame === 'WhacAMole' && <WhacAMoleGame />}
         {currentGame === 'ClickingGame' && <ClickingGame />}
         {currentGame === 'MemoryGame' && <MemoryGame />}
-        {currentGame === 'Hangman' && <HangmanGame />}
+        {currentGame === 'SnakeGame' && <SnakeGame />}
+        {/* {currentGame === 'Hangman' && <HangmanGame />} */}
       </div>
     </div>
   );
@@ -436,6 +438,160 @@ function HangmanGame() {
         </div>
       )}
       <button onClick={resetGame}>Reset Game</button>
+    </div>
+  );
+}
+
+
+function SnakeGame() {
+  const GRID_SIZE = 20;
+  const CELL_SIZE = 20;
+  const INITIAL_SNAKE_LENGTH = 3;
+  const INITIAL_SNAKE_SPEED = 50;
+  const [snake, setSnake] = useState([]);
+  const [food, setFood] = useState({ x: 10, y: 10 });
+  const [direction, setDirection] = useState('RIGHT');
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [score, setScore] = useState(0);
+  const [speed, setSpeed] = useState(INITIAL_SNAKE_SPEED);
+
+  const gameRef = useRef(null);
+
+
+  useEffect(() => {
+    if (!isGameOver) {
+      gameRef.current = setInterval(moveSnake, speed);
+    } else {
+      clearInterval(gameRef.current);
+    }
+    return () => clearInterval(gameRef.current);
+  });
+
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      switch (event.key) {
+        case 'ArrowUp':
+          if (direction !== 'DOWN') setDirection('UP');
+          break;
+        case 'ArrowDown':
+          if (direction !== 'UP') setDirection('DOWN');
+          break;
+        case 'ArrowLeft':
+          if (direction !== 'RIGHT') setDirection('LEFT');
+          break;
+        case 'ArrowRight':
+          if (direction !== 'LEFT') setDirection('RIGHT');
+          break;
+        default:
+          break;
+      }
+    };
+    const initialSnake = [];
+    for (let i = 0; i < INITIAL_SNAKE_LENGTH; i++) {
+      initialSnake.push({ x: i, y: 0 });
+    }
+    setSnake(initialSnake);
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      clearInterval(gameRef.current);
+    };
+  }, [direction]);
+
+  const moveSnake = () => {
+    const newSnake = [...snake];
+    const head = newSnake[newSnake.length - 1];
+    let newHead;
+  
+    // Calculate the new head position based on the current direction
+    switch (direction) {
+      case 'UP':
+        newHead = { x: head.x, y: head.y - 1 };
+        break;
+      case 'DOWN':
+        newHead = { x: head.x, y: head.y + 1 };
+        break;
+      case 'LEFT':
+        newHead = { x: head.x - 1, y: head.y };
+        break;
+      case 'RIGHT':
+        newHead = { x: head.x + 1, y: head.y };
+        break;
+      default:
+        break;
+    }
+  
+    if (isCollidingWithFood(newHead)) {
+      setFood(generateRandomFood());
+      setScore((prevScore) => prevScore + 1);
+      setSpeed((prevSpeed) => prevSpeed * 0.95);
+    }
+  
+    if (isCollidingWithWall(newHead) || isCollidingWithSnakeBody(newHead)) {
+      setIsGameOver(true);
+      return;
+    }
+  
+    newSnake.push(newHead);
+  
+    for (let i = 0; i < newSnake.length - 1; i++) {
+      newSnake[i] = { ...newSnake[i + 1] };
+    }
+  
+    setSnake(newSnake);
+  };
+  
+
+  const isCollidingWithFood = (position) => position.x === food.x && position.y === food.y;
+
+  const generateRandomFood = () => ({
+    x: Math.floor(Math.random() * GRID_SIZE),
+    y: Math.floor(Math.random() * GRID_SIZE),
+  });
+
+  const isCollidingWithWall = (position) =>
+    position.x < 0 || position.y < 0 || position.x >= GRID_SIZE || position.y >= GRID_SIZE;
+
+  const isCollidingWithSnakeBody = (position) =>
+    snake.some((segment) => segment.x === position.x && segment.y === position.y);
+
+  const handleRestart = () => {
+    setIsGameOver(false);
+    setSnake([]);
+    setFood(generateRandomFood());
+    setScore(0);
+    setSpeed(INITIAL_SNAKE_SPEED);
+    setDirection('RIGHT');
+  };
+
+  return (
+    <div>
+      <h1>Snake Game</h1>
+      <div className="grid-container">
+        <div className="grid">
+          {Array.from({ length: GRID_SIZE * GRID_SIZE }, (_, index) => {
+            const x = index % GRID_SIZE;
+            const y = Math.floor(index / GRID_SIZE);            
+            const isSnakeSegment = snake.some((segment) => segment.x === x && segment.y === y);
+            const isFood = food.x === x && food.y === y;
+            console.log('x:', x, 'y:', y);
+            console.log('Snake segments:', snake);
+
+            return (
+              <div
+                key={index}
+                className={`cell ${isSnakeSegment ? 'snake' : ''} ${isFood ? 'food' : ''}`}
+                style={{ width: CELL_SIZE, height: CELL_SIZE }}
+              ></div>
+            );
+          })}
+        </div>
+      </div>
+      <p>Score: {score}</p>
+      {isGameOver && <button onClick={handleRestart}>Restart Game</button>}
     </div>
   );
 }

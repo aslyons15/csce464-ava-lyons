@@ -227,3 +227,14 @@ a:hover {
   margin-left: 20px;
 }
 
+.cell {
+  border: 1px solid #ccc;
+}
+
+.snake {
+  background-color: green; /* or any other color you want */
+}
+
+.food {
+  background-color: red; /* or any other color you want */
+}
