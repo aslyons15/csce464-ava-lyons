@@ -64,7 +64,15 @@ nav {
   nav {
     flex-direction: column;
   }
+  
 }
+
+@media screen and (max-width:600px) {
+  .game-choice {
+    flex-direction: column;
+  }
+}
+
 
 .nav_container {
   display: flex;
@@ -177,7 +185,7 @@ a:hover {
 }
 
 .game-choice {
-  flex-direction: row;
+  display: flex;
   margin-bottom: 5%;
 }
 

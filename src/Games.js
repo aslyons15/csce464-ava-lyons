@@ -577,8 +577,6 @@ function SnakeGame() {
             const y = Math.floor(index / GRID_SIZE);            
             const isSnakeSegment = snake.some((segment) => segment.x === x && segment.y === y);
             const isFood = food.x === x && food.y === y;
-            console.log('x:', x, 'y:', y);
-            console.log('Snake segments:', snake);
 
             return (
               <div
