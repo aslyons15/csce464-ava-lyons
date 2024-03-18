@@ -92,6 +92,7 @@ a:hover {
 .image_item {
   height: 500px;
   width: 400px;
+  padding: 10px;
 }
 
 @media screen and (max-width:900px) {

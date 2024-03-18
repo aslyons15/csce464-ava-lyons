@@ -5,7 +5,6 @@ import Resume from './Resume';
 import Photos from './Photos';
 import FeedbackForm from './feedbackForm';
 import Games from './Games';
-import './CSCE464Final.css';
 
 function App() {
   return (
@@ -17,6 +16,7 @@ function App() {
          <Route path="/photos" Component={Photos} />
          <Route path="/games" Component={Games} />
         <Route path="/feedback" Component={FeedbackForm} />
+        {/* <Route path="/feedback" Component={FeedbackForm} /> */}
         </Routes>
       </div>
     </Router>

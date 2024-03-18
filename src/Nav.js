@@ -17,6 +17,9 @@ const Nav = () => {
       <div className="nav_item">
         <Link to="/feedback">Feedback</Link>
       </div>
+      <div className="nav_item">
+        <Link to="/books">Books</Link>
+      </div>
     </nav>
   );
 };
