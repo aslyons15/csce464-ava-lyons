@@ -11,13 +11,15 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Nav />
+      <div style={{ paddingTop: '64px' }}>
+        <Nav/>
+        </div>
         <Routes>
         <Route path="/" Component={Resume} />
          <Route path="/photos" Component={Photos} />
          <Route path="/games" Component={Games} />
+         <Route path="/books" Component={Books} />
         <Route path="/feedback" Component={FeedbackForm} />
-        <Route path="/books" Component={Books} />
         </Routes>
       </div>
     </Router>

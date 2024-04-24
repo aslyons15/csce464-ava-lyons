@@ -16,7 +16,7 @@ export default function Games() {
         <button onClick={() => toggleGame('WhacAMole')}>Whac-a-Mole Game</button>
         <button onClick={() => toggleGame('ClickingGame')}>Clicking Game</button>
         <button onClick={() => toggleGame('MemoryGame')}>Memory Game</button>
-        <button onClick={() => toggleGame('SnakeGame')}>Snake Game</button>
+         {/* <button onClick={() => toggleGame('SnakeGame')}>Snack Game</button> */}
         {/* <button onClick={() => toggleGame('Hangman')}>Hangman Game</button> */}
       </div>
       <div>
@@ -25,7 +25,7 @@ export default function Games() {
         {currentGame === 'ClickingGame' && <ClickingGame />}
         {currentGame === 'MemoryGame' && <MemoryGame />}
         {currentGame === 'SnakeGame' && <SnakeGame />}
-        {/* {currentGame === 'Hangman' && <HangmanGame />} */}
+        {currentGame === 'Hangman' && <HangmanGame />}
       </div>
     </div>
   );
@@ -48,6 +48,7 @@ function WhacAMoleGame() {
   useEffect(() => {
     const countDownTimerId = setInterval(countDown, 1000);
     return () => clearInterval(countDownTimerId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const randomSquare = () => {
@@ -294,7 +295,7 @@ function MemoryGame() {
       setMoves((prevMoves) => prevMoves + 1);
       setSelectedCardIds([]);
     }
-  }, [selectedCardIds]);
+  }, [cards, selectedCardIds]);
 
   const handleRestart = () => {
     setCards(generateCards());
