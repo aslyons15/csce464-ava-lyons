@@ -1,4 +1,4 @@
-body {
+.center {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,13 +12,19 @@ nav {
 .header {
   display: flex;
   flex-direction: column;
-  color: green;
   margin: 5px;
+}
+
+root {
+  height: 100%;
+  width: 100%;
 }
 
 .container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+
 }
 
 .subheader {
@@ -27,7 +33,6 @@ nav {
 }
 
 .subcontainer1 {
-  width: 25%;
   display: flex;
   flex-direction: column;
 }
@@ -47,10 +52,6 @@ nav {
 
 .location {
   font-style: italic;
-}
-
-#linkedIn {
-  color: blue;
 }
 
 .nav_item {
@@ -155,6 +156,7 @@ a:hover {
 	height: 200px;
 	width: 200px;
 	border: solid black 1px;
+  background-color: white;
 }
 
 .mole {
@@ -247,3 +249,41 @@ a:hover {
 .food {
   background-color: red; /* or any other color you want */
 }
+
+.cardcontainer {
+  display: flex;
+  justify-content: center;
+}
+
+.image_card {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  margin: 20px;
+}
+
+.image_card .MuiCardMedia-root {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.image_card .MuiCardContent-root {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.image_card:hover .MuiCardMedia-root {
+  opacity: 0;
+}
+
+.image_card:hover .MuiCardContent-root {
+  opacity: 1;
+}
+

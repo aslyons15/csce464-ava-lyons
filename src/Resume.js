@@ -1,26 +1,34 @@
 import React from 'react';
+import { Alert } from '@mui/material';
 import './CSCE464Final.css';
 
-export default function Resume() {
+
+const Resume = ({ darkMode, langMode }) => {
 
   return (
-    <body>
-      <div class="header">
+    <body style={{ backgroundColor: darkMode ? 'black' : 'white' }} class="center">
+      {langMode && (
+        <Alert severity="warning">
+          Due to my location of work, French is not available for this page
+        </Alert>
+      )}
+      <div style={{ color: darkMode ? 'lightgreen' : 'green' }} class="header">
         <h1>Ava Lyons</h1>
         <h3 id="title">Software Engineer</h3>
       </div><div class="container">
-        <div class="subcontainer1">
+        <div style={{ color: darkMode ? 'white' : 'black' }} class="subcontainer1">
           <div class="item">
             <ul>
-              <h4 class="subheader">Contact</h4>
+              <h4 style={{ color: darkMode ? 'lightgreen' : 'green' }} class="subheader">Contact</h4>
               <h5>aslyons15@gmail.com</h5>
               <h5>630-520-8763</h5>
-              <h5 id="linkedIn"><a href='https://linkedin.com/in/ava-lyons' target="_blank" rel="noreferrer">linkedin.com/in/ava-lyons</a></h5>
+              <h5 >
+                <a style={{ color: darkMode ? 'lightblue' : 'blue' }} href='https://linkedin.com/in/ava-lyons' target="_blank" rel="noreferrer">linkedin.com/in/ava-lyons</a></h5>
             </ul>
           </div>
           <div class="item">
             <ul>
-              <h4 class="subheader">Education</h4>
+              <h4 style={{ color: darkMode ? 'lightgreen' : 'green' }} class="subheader">Education</h4>
               <h5>Univeristy of Nebraska-Lincoln</h5>
               <h5>B.S. Software Engineering</h5>
               <h5>Minor French & Math</h5>
@@ -29,7 +37,7 @@ export default function Resume() {
           </div>
           <div class="item">
             <ul>
-              <h4 class="subheader">Awards</h4>
+              <h4 style={{ color: darkMode ? 'lightgreen' : 'green' }} class="subheader">Awards</h4>
               <h5>Certificate of Excellence for
               </h5>
               <h5>Studies in French</h5>
@@ -38,7 +46,7 @@ export default function Resume() {
           </div>
           <div class="item">
             <ul>
-              <h4 class="subheader">Interests</h4>
+              <h4 style={{ color: darkMode ? 'lightgreen' : 'green' }} class="subheader">Interests</h4>
               <h5>Animals, Plants & Gardening
               </h5>
               <h5>Learning Languages & Cultures</h5>
@@ -47,7 +55,7 @@ export default function Resume() {
           </div>
           <div class="item">
             <ul>
-              <h4 class="subheader">Involvement</h4>
+              <h4 style={{ color: darkMode ? 'lightgreen' : 'green' }} class="subheader">Involvement</h4>
               <h5>Career Guide & Teaching Assistant
               </h5>
               <h5> Engineering Student Advisory Board: VP of Finance 2021 - 2022; Career Development Chair 2021 - 2022, 2023
@@ -57,11 +65,11 @@ export default function Resume() {
             </ul>
           </div>
         </div>
-        <div class="vertical-line"/>
-        <div class="subcontainer2">
+        <div class="vertical-line" />
+        <div style={{ color: darkMode ? 'white' : 'black' }} class="subcontainer2">
           <div class="item">
             <ul>
-              <h4 class="subheader">Experience</h4>
+              <h4 style={{ color: darkMode ? 'lightgreen' : 'green' }} class="subheader">Experience</h4>
               <h5 class="title">Software Engineering Intern</h5>
               <h5 class="location">Workiva - remote</h5>
               <ul>
@@ -91,11 +99,11 @@ export default function Resume() {
                   1-on-1s with developers
                 </li>
               </ul>
-              <h4 class="subheader">Skills</h4>
+              <h4 style={{ color: darkMode ? 'lightgreen' : 'green' }} class="subheader">Skills</h4>
               <p> Python | JavaScript | TypeScript | Dart | HTML | CSS | React | Redux | C#.NET | Java | Git | C | JSON |
                 SQL | Kivy | LaTex | Arduino | R | Haskell | Fortran | Prolog | Lisp | TensorFlow | Agile |
               </p>
-              <h4 class="subheader">Projects</h4>
+              <h4 style={{ color: darkMode ? 'lightgreen' : 'green' }} class="subheader">Projects</h4>
               <h5 class="title">Nebraska Environmental Trust (NET) Auditing System
               </h5>
               <ul>
@@ -118,7 +126,7 @@ export default function Resume() {
               </h5>
               <ul>
                 <li>Added reinforcement learning in Python to optimize an existing formal verification software using
-                  genetic algorithms named EvoAlloy
+                  genetic algorithms named <a style={{ color: darkMode ? 'lightblue' : 'blue' }} href='https://cse.unl.edu/~hbagheri/publications/2018ASE.pdf' target="_blank" rel="noreferrer">EvoAlloy</a>
                 </li>
               </ul>
             </ul>
@@ -128,3 +136,5 @@ export default function Resume() {
     </body>
   );
 };
+
+export default Resume;

@@ -1,31 +1,40 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CSCE464Final.css';
 
-export default function Games() {
+var darkModes;
+var langModes;
+
+const Games = ({ darkMode, langMode }) => {
   const [currentGame, setCurrentGame] = useState('NumberGuessing');
+  darkModes = darkMode;
+  langModes = langMode;
 
   const toggleGame = (game) => {
     setCurrentGame(game);
   };
 
   return (
-    <div id='game-menu'>
-      <h1>Games Menu</h1>
-      <div className='game-choice'>
-        <button onClick={() => toggleGame('NumberGuessing')}>Number Guessing Game</button>
-        <button onClick={() => toggleGame('WhacAMole')}>Whac-a-Mole Game</button>
-        <button onClick={() => toggleGame('ClickingGame')}>Clicking Game</button>
-        <button onClick={() => toggleGame('MemoryGame')}>Memory Game</button>
-         {/* <button onClick={() => toggleGame('SnakeGame')}>Snack Game</button> */}
-        {/* <button onClick={() => toggleGame('Hangman')}>Hangman Game</button> */}
-      </div>
-      <div>
+    <div style={{ backgroundColor: darkMode ? 'black' : 'white' }} id='game-menu'>
+  <h1 style={{ color: darkMode ? 'white' : 'black' }}>{langMode ? 'Menu des jeux' : 'Games Menu'}</h1>
+  <div className='game-choice'>
+    <button onClick={() => toggleGame('NumberGuessing')}>
+      {langMode ? 'Jeu de devinette de nombres' : 'Number Guessing Game'}
+    </button>
+    <button onClick={() => toggleGame('WhacAMole')}>
+      {langMode ? 'Jeu de tape-taupe' : 'Whac-a-Mole Game'}
+    </button>
+    <button onClick={() => toggleGame('ClickingGame')}>
+      {langMode ? 'Jeu de clics' : 'Clicking Game'}
+    </button>
+    <button onClick={() => toggleGame('MemoryGame')}>
+      {langMode ? 'Jeu de mémoire' : 'Memory Game'}
+    </button>
+  </div>
+  <div>
         {currentGame === 'NumberGuessing' && <NumberGuessingGame />}
         {currentGame === 'WhacAMole' && <WhacAMoleGame />}
         {currentGame === 'ClickingGame' && <ClickingGame />}
         {currentGame === 'MemoryGame' && <MemoryGame />}
-        {currentGame === 'SnakeGame' && <SnakeGame />}
-        {currentGame === 'Hangman' && <HangmanGame />}
       </div>
     </div>
   );
@@ -39,16 +48,23 @@ function WhacAMoleGame() {
   const [timerId, setTimerId] = useState(null);
 
   useEffect(() => {
-    const interval = difficulty === 'Hard' ? 500 : 1000;
+    const interval = (difficulty === 'Hard' || difficulty === 'Difficile') ? 500 : 1000;
     const timer = setInterval(randomSquare, interval);
     setTimerId(timer);
     return () => clearInterval(timer);
   }, [difficulty]);
 
+  const countDown = () => {
+    setCurrentTime(prevTime => prevTime - 1);
+    if (currentTime === 0) {
+      clearInterval(timerId);
+      alert(langModes ? 'JEU TERMINÉ! Votre score final est de ' + result : 'GAME OVER! Your final score is ' + result);
+    }
+  };
+
   useEffect(() => {
     const countDownTimerId = setInterval(countDown, 1000);
     return () => clearInterval(countDownTimerId);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const randomSquare = () => {
@@ -63,16 +79,13 @@ function WhacAMoleGame() {
     }
   };
 
-  const countDown = () => {
-    setCurrentTime(prevTime => prevTime - 1);
-    if (currentTime === 0) {
-      clearInterval(timerId);
-      alert('GAME OVER! Your final score is ' + result);
-    }
-  };
 
   const handleDifficultyToggle = () => {
-    setDifficulty(prevDifficulty => prevDifficulty === 'Hard' ? 'Simple' : 'Hard');
+    setDifficulty(prevDifficulty =>
+      (prevDifficulty === 'Hard' || prevDifficulty === 'Difficile')
+        ? (!langModes ? 'Simple' : 'Facile')
+        : (!langModes ? 'Hard' : 'Difficile')
+    );
   };
 
   const resetGame = () => {
@@ -82,21 +95,21 @@ function WhacAMoleGame() {
 
   return (
     <div>
-      <div>Mode:
+      <div style={{ color: darkModes ? 'white' : 'black' }} >Mode:
         <button id="difficulty-toggle" onClick={handleDifficultyToggle}>{difficulty}</button>
         <div id='restart-mole'>
-          <button onClick={resetGame}>Start new game</button>
+          <button onClick={resetGame}>{langModes ? 'Commencer une nouvelle partie' : 'Start new game'}</button>
         </div>
       </div>
 
+      <h2 style={{ color: darkModes ? 'white' : 'black' }}>{langModes ? 'Votre score' : 'Your score'}: {result}</h2>
+      <h2 style={{ color: darkModes ? 'white' : 'black' }}>{langModes ? 'Temps restant' : 'Time Left'}: {currentTime}</h2>
 
-      <h2>Your score: {result}</h2>
-      <h2>Time Left: {currentTime}</h2>
       <div className="grid">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => (
           <div
             key={index}
-            className={`square ${index === hitPosition ? 'mole' : ''}`}
+            class={`square ${index === hitPosition ? 'mole' : ''}`}
             onClick={() => handleSquareClick(index)}
           ></div>
         ))}
@@ -127,19 +140,19 @@ function NumberGuessingGame() {
     document.getElementById('guessField').focus();
 
     if (userGuess === randomNumber) {
-      setLastResult('Congratulations! You got it right!');
+      setLastResult(langModes ? 'Félicitations! Vous avez trouvé!' : 'Congratulations! You got it right!');
       setLowOrHi('');
       setIsGameOver(true);
     } else if (guessCount === 10) {
-      setLastResult('!!!GAME OVER!!!');
+      setLastResult(langModes ? '!!!FIN DE JEU!!!' : '!!!GAME OVER!!!');
       setLowOrHi('');
       setIsGameOver(true);
     } else {
-      setLastResult('Wrong!');
+      setLastResult(langModes ? 'Faux!' : 'Wrong!');
       if (userGuess < randomNumber) {
-        setLowOrHi('Last guess was too low!');
+        setLowOrHi(langModes ? 'La dernière supposition était trop basse!' : 'Last guess was too low!');
       } else if (userGuess > randomNumber) {
-        setLowOrHi('Last guess was too high!');
+        setLowOrHi(langModes ? 'La dernière supposition était trop haute!' : 'Last guess was too high!');
       }
     }
   }
@@ -155,22 +168,26 @@ function NumberGuessingGame() {
 
   return (
     <div>
-      <h1>Number guessing game</h1>
-      <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+      <h1 style={{ color: darkModes ? 'white' : 'black' }}>{langModes ? 'Jeu de devinette de nombres' : 'Number guessing game'}</h1>
+      <p style={{ color: darkModes ? 'white' : 'black' }}>
+        {langModes ? 'Nous avons sélectionné un nombre aléatoire entre 1 et 100. Essayez de deviner en 10 tours ou moins. Nous vous dirons si votre supposition était trop élevée ou trop basse.' :
+          'We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We\'ll tell you if your guess was too high or too low.'}
+      </p>
       <div className="form">
-        <label htmlFor="guessField">Enter a guess: </label>
+        <label style={{ color: darkModes ? 'white' : 'black' }} htmlFor="guessField">{langModes ? 'Entrez une supposition : ' : 'Enter a guess: '}</label>
         <input type="text" id="guessField" className="guessField" />
-        <input type="button" value="Submit guess" className="guessSubmit" onClick={checkGuess} />
+        <input type="button" value={langModes ? 'Soumettre une supposition' : 'Submit guess'} className="guessSubmit" onClick={checkGuess} />
       </div>
       <div className="resultParas">
         <p className="guesses">{guesses.join(' ')}</p>
-        <p className="lastResult">{lastResult}</p>
-        <p className="lowOrHi">{lowOrHi}</p>
+        <p className="lastResult" style={{ color: darkModes ? 'white' : 'black' }}>{lastResult}</p>
+        <p className="lowOrHi" style={{ color: darkModes ? 'white' : 'black' }}>{lowOrHi}</p>
       </div>
       {isGameOver && (
-        <button onClick={resetGame}>Start new game</button>
+        <button onClick={resetGame}>{langModes ? 'Commencer une nouvelle partie' : 'Start new game'}</button>
       )}
     </div>
+
   );
 };
 
@@ -202,20 +219,21 @@ function ClickingGame() {
   };
 
   return (
-    <div>
-      <h2>Clicking Game</h2>
-      <p>Click the button as many times as possible within 10 seconds!</p>
-      <button onClick={handleClick} disabled={isGameOver}>Click Me!</button>
-      <p>Time Left: {timeLeft}</p>
-      <p>Score: {score}</p>
+    <div style={{ color: darkModes ? 'white' : 'black' }}>
+      <h2>{langModes ? 'Jeu de clics' : 'Clicking Game'}</h2>
+      <p>{langModes ? 'Cliquez sur le bouton autant de fois que possible en 10 secondes !' : 'Click the button as many times as possible within 10 seconds!'}</p>
+      <button onClick={handleClick} disabled={isGameOver}>{langModes ? 'Cliquez ici !' : 'Click Me!'}</button>
+      <p>{langModes ? 'Temps restant : ' : 'Time Left: '} {timeLeft}</p>
+      <p>{langModes ? 'Score : ' : 'Score: '} {score}</p>
       {isGameOver && (
         <div>
-          <p>Game Over!</p>
-          <p>Final Score: {score}</p>
-          <button onClick={handleRestart}>Restart</button>
+          <p>{langModes ? 'Fin du jeu !' : 'Game Over!'}</p>
+          <p>{langModes ? 'Score final : ' : 'Final Score: '} {score}</p>
+          <button onClick={handleRestart}>{langModes ? 'Redémarrer' : 'Restart'}</button>
         </div>
       )}
     </div>
+
   );
 }
 
@@ -307,9 +325,9 @@ function MemoryGame() {
   };
 
   return (
-    <div>
-      <h2>Memory Game</h2>
-      <p>Match pairs of cards before time runs out!</p>
+    <div style={{ color: darkModes ? 'white' : 'black' }}>
+      <h2>{langModes ? 'Jeu de mémoire' : 'Memory Game'}</h2>
+      <p>{langModes ? 'Associez des paires de cartes avant la fin du temps imparti !' : 'Match pairs of cards before time runs out!'}</p>
       <div className="cards">
         {cards.reduce((rows, card, index) => {
           if (index % 4 === 0) {
@@ -321,7 +339,7 @@ function MemoryGame() {
               className={`card ${card.matched ? 'matched' : ''}`}
               onClick={() => handleCardClick(card.id)}
             >
-              {card.flipped || card.matched ? <span class='game-item'>{card.symbol}</span> : <span class='game-item'>&#9733;</span>}
+              {card.flipped || card.matched ? <span className='game-item'>{card.symbol}</span> : <span className='game-item'>&#9733;</span>}
             </div>
           );
           return rows;
@@ -332,265 +350,22 @@ function MemoryGame() {
         ))}
       </div>
 
-
       <div>
-        <p>Moves: {moves}</p>
-        <p>Matched Pairs: {matchedPairs}</p>
-        <p>Time Left: {timeLeft}</p>
+        <p>{langModes ? 'Mouvements : ' : 'Moves: '} {moves}</p>
+        <p>{langModes ? 'Paires assorties : ' : 'Matched Pairs: '} {matchedPairs}</p>
+        <p>{langModes ? 'Temps restant : ' : 'Time Left: '} {timeLeft}</p>
         {isGameOver && (
           <div>
-            <p>Game Over!</p>
-            <p>Final Moves: {moves}</p>
-            <p>Final Matched Pairs: {matchedPairs}</p>
-            <button onClick={handleRestart}>Restart</button>
+            <p>{langModes ? 'Fin du jeu !' : 'Game Over!'}</p>
+            <p>{langModes ? 'Mouvements finaux : ' : 'Final Moves: '} {moves}</p>
+            <p>{langModes ? 'Paires assorties finales : ' : 'Final Matched Pairs: '} {matchedPairs}</p>
+            <button onClick={handleRestart}>{langModes ? 'Redémarrer' : 'Restart'}</button>
           </div>
         )}
       </div>
     </div>
+
   );
 }
 
-function HangmanGame() {
-  const [word, setWord] = useState('');
-  const [guessedLetters, setGuessedLetters] = useState([]);
-  const [remainingAttempts, setRemainingAttempts] = useState(6);
-  const [gameOver, setGameOver] = useState(false);
-  const [gameWon, setGameWon] = useState(false);
-  const [wordFetched, setWordFetched] = useState(false);
-
-  const fetchWord = async () => {
-    try {
-      const response = await fetch('https://random-word-api.herokuapp.com/word?number=1');
-      const data = await response.json();
-      setWord(data[0].toLowerCase());
-      setWordFetched(true);
-    } catch (error) {
-      console.error('Error fetching word:', error);
-    }
-  };
-
-  const resetGame = () => {
-    setWord('');
-    setGuessedLetters([]);
-    setRemainingAttempts(6);
-    setGameOver(false);
-    setGameWon(false);
-    setWordFetched(false); // Reset wordFetched state
-  };
-
-  const handleLetterGuess = (letter) => {
-    if (!guessedLetters.includes(letter)) {
-      setGuessedLetters((prevGuessedLetters) => [...prevGuessedLetters, letter]);
-      if (!word.includes(letter)) {
-        setRemainingAttempts((prevAttempts) => prevAttempts - 1);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (!wordFetched) {
-      fetchWord();
-    }
-    if (remainingAttempts === 0) {
-      setGameOver(true);
-    }
-    const guessedWord = guessedLetters.join('');
-    if (guessedWord === word) {
-      setGameWon(true);
-    }
-  }, [guessedLetters, remainingAttempts, word, wordFetched]);
-
-  const renderWord = () => {
-    return word.split('').map((char, index) => (
-      <span key={index}>{guessedLetters.includes(char) || char === ' ' ? char : '_'}</span>
-    ));
-  };
-
-  return (
-    <div>
-      <h1>Hangman Game</h1>
-      <div className="hangman">
-        <div className="hangman-body">
-          {remainingAttempts < 6 && <div className="head"></div>}
-          {remainingAttempts < 5 && <div className="body"></div>}
-          {remainingAttempts < 4 && <div className="left-arm"></div>}
-          {remainingAttempts < 3 && <div className="right-arm"></div>}
-          {remainingAttempts < 2 && <div className="left-leg"></div>}
-          {remainingAttempts < 1 && <div className="right-leg"></div>}
-        </div>
-      </div>
-
-      <div className="word">{renderWord()}</div>
-      {!gameOver && !gameWon && (
-        <div className="keyboard">
-          {Array.from(Array(26), (_, i) => String.fromCharCode(65 + i)).map((letter, index) => (
-            <button key={index} onClick={() => handleLetterGuess(letter.toLowerCase())} disabled={guessedLetters.includes(letter.toLowerCase())}>
-              {letter}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {gameOver && <h2>Game Over! The word was "{word}".</h2>}
-      {gameWon && (
-        <div>
-          <h2>Congratulations! You won!</h2>
-          <p>Well done! You successfully guessed the word. Keep up the good work!</p>
-        </div>
-      )}
-      <button onClick={resetGame}>Reset Game</button>
-    </div>
-  );
-}
-
-
-function SnakeGame() {
-  const GRID_SIZE = 20;
-  const CELL_SIZE = 20;
-  const INITIAL_SNAKE_LENGTH = 3;
-  const INITIAL_SNAKE_SPEED = 50;
-  const [snake, setSnake] = useState([]);
-  const [food, setFood] = useState({ x: 10, y: 10 });
-  const [direction, setDirection] = useState('RIGHT');
-  const [isGameOver, setIsGameOver] = useState(false);
-  const [score, setScore] = useState(0);
-  const [speed, setSpeed] = useState(INITIAL_SNAKE_SPEED);
-
-  const gameRef = useRef(null);
-
-
-  useEffect(() => {
-    if (!isGameOver) {
-      gameRef.current = setInterval(moveSnake, speed);
-    } else {
-      clearInterval(gameRef.current);
-    }
-    return () => clearInterval(gameRef.current);
-  });
-
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      switch (event.key) {
-        case 'ArrowUp':
-          if (direction !== 'DOWN') setDirection('UP');
-          break;
-        case 'ArrowDown':
-          if (direction !== 'UP') setDirection('DOWN');
-          break;
-        case 'ArrowLeft':
-          if (direction !== 'RIGHT') setDirection('LEFT');
-          break;
-        case 'ArrowRight':
-          if (direction !== 'LEFT') setDirection('RIGHT');
-          break;
-        default:
-          break;
-      }
-    };
-    const initialSnake = [];
-    for (let i = 0; i < INITIAL_SNAKE_LENGTH; i++) {
-      initialSnake.push({ x: i, y: 0 });
-    }
-    setSnake(initialSnake);
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      clearInterval(gameRef.current);
-    };
-  }, [direction]);
-
-  const moveSnake = () => {
-    const newSnake = [...snake];
-    const head = newSnake[newSnake.length - 1];
-    let newHead;
-  
-    // Calculate the new head position based on the current direction
-    switch (direction) {
-      case 'UP':
-        newHead = { x: head.x, y: head.y - 1 };
-        break;
-      case 'DOWN':
-        newHead = { x: head.x, y: head.y + 1 };
-        break;
-      case 'LEFT':
-        newHead = { x: head.x - 1, y: head.y };
-        break;
-      case 'RIGHT':
-        newHead = { x: head.x + 1, y: head.y };
-        break;
-      default:
-        break;
-    }
-  
-    if (isCollidingWithFood(newHead)) {
-      setFood(generateRandomFood());
-      setScore((prevScore) => prevScore + 1);
-      setSpeed((prevSpeed) => prevSpeed * 0.95);
-    }
-  
-    if (isCollidingWithWall(newHead) || isCollidingWithSnakeBody(newHead)) {
-      setIsGameOver(true);
-      return;
-    }
-  
-    newSnake.push(newHead);
-  
-    for (let i = 0; i < newSnake.length - 1; i++) {
-      newSnake[i] = { ...newSnake[i + 1] };
-    }
-  
-    setSnake(newSnake);
-  };
-  
-
-  const isCollidingWithFood = (position) => position.x === food.x && position.y === food.y;
-
-  const generateRandomFood = () => ({
-    x: Math.floor(Math.random() * GRID_SIZE),
-    y: Math.floor(Math.random() * GRID_SIZE),
-  });
-
-  const isCollidingWithWall = (position) =>
-    position.x < 0 || position.y < 0 || position.x >= GRID_SIZE || position.y >= GRID_SIZE;
-
-  const isCollidingWithSnakeBody = (position) =>
-    snake.some((segment) => segment.x === position.x && segment.y === position.y);
-
-  const handleRestart = () => {
-    setIsGameOver(false);
-    setSnake([]);
-    setFood(generateRandomFood());
-    setScore(0);
-    setSpeed(INITIAL_SNAKE_SPEED);
-    setDirection('RIGHT');
-  };
-
-  return (
-    <div>
-      <h1>Snake Game</h1>
-      <div className="grid-container">
-        <div className="grid">
-          {Array.from({ length: GRID_SIZE * GRID_SIZE }, (_, index) => {
-            const x = index % GRID_SIZE;
-            const y = Math.floor(index / GRID_SIZE);            
-            const isSnakeSegment = snake.some((segment) => segment.x === x && segment.y === y);
-            const isFood = food.x === x && food.y === y;
-
-            return (
-              <div
-                key={index}
-                className={`cell ${isSnakeSegment ? 'snake' : ''} ${isFood ? 'food' : ''}`}
-                style={{ width: CELL_SIZE, height: CELL_SIZE }}
-              ></div>
-            );
-          })}
-        </div>
-      </div>
-      <p>Score: {score}</p>
-      {isGameOver && <button onClick={handleRestart}>Restart Game</button>}
-    </div>
-  );
-}
+export default Games;

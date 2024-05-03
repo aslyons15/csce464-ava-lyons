@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "rating": 5,
+    "progress": 100
+  },
+  {
+    "id": 2,
+    "title": "Sense and Sensibility",
+    "author": "Jane Austen",
+    "rating": 4,
+    "progress": 90
+  },
+  {
+    "id": 3,
+    "title": "Emma",
+    "author": "Jane Austen",
+    "rating": 4,
+    "progress": 80
+  },
+  {
+    "id": 4,
+    "title": "A Court of Thorns and Roses",
+    "author": "Sarah J. Maas",
+    "rating": 4,
+    "progress": 70
+  },
+  {
+    "id": 5,
+    "title": "A Court of Mist and Fury",
+    "author": "Sarah J. Maas",
+    "rating": 5,
+    "progress": 100
+  },
+  {
+    "id": 6,
+    "title": "A Court of Wings and Ruin",
+    "author": "Sarah J. Maas",
+    "rating": 4,
+    "progress": 80
+  },
+  {
+    "id": 7,
+    "title": "Lost Illusions",
+    "author": "Honoré de Balzac",
+    "rating": 4,
+    "progress": 90
+  },
+  {
+    "id": 8,
+    "title": "Father Goriot",
+    "author": "Honoré de Balzac",
+    "rating": 4,
+    "progress": 100
+  },
+  {
+    "id": 9,
+    "title": "The Hunger Games",
+    "author": "Suzanne Collins",
+    "rating": 5,
+    "progress": 100
+  },
+  {
+    "id": 10,
+    "title": "Catching Fire",
+    "author": "Suzanne Collins",
+    "rating": 4,
+    "progress": 90
+  },
+  {
+    "id": 11,
+    "title": "Mockingjay",
+    "author": "Suzanne Collins",
+    "rating": 4,
+    "progress": 80
+  },
+  {
+    "id": 12,
+    "title": "Divergent",
+    "author": "Veronica Roth",
+    "rating": 4,
+    "progress": 100
+  },
+  {
+    "id": 13,
+    "title": "Insurgent",
+    "author": "Veronica Roth",
+    "rating": 4,
+    "progress": 90
+  },
+  {
+    "id": 14,
+    "title": "Allegiant",
+    "author": "Veronica Roth",
+    "rating": 3,
+    "progress": 70
+  },
+  {
+    "id": 15,
+    "title": "The Giver",
+    "author": "Lois Lowry",
+    "rating": 5,
+    "progress": 100
+  },
+  {
+    "id": 16,
+    "title": "Gathering Blue",
+    "author": "Lois Lowry",
+    "rating": 4,
+    "progress": 90
+  },
+  {
+    "id": 17,
+    "title": "Messenger",
+    "author": "Lois Lowry",
+    "rating": 4,
+    "progress": 80
+  },
+  {
+    "id": 18,
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "rating": 4,
+    "progress": 80
+  },
+  {
+    "id": 19,
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "rating": 5,
+    "progress": 100
+  },
+  {
+    "id": 20,
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "rating": 4,
+    "progress": 90
+  },
+  {
+    "id": 21,
+    "title": "1984",
+    "author": "George Orwell",
+    "rating": 5,
+    "progress": 100
+  },
+  {
+    "id": 22,
+    "title": "The Lord of the Rings",
+    "author": "J.R.R. Tolkien",
+    "rating": 5,
+    "progress": 100
+  },
+  {
+    "id": 23,
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "rating": 5,
+    "progress": 100
+  },
+  {
+    "id": 24,
+    "title": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "rating": 4,
+    "progress": 90
+  },
+  {
+    "id": 25,
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "rating": 4,
+    "progress": 90
+  }
+]
